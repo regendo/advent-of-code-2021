@@ -10,3 +10,18 @@ pub fn solve_1() {
 		.count();
 	println!("The measurements increased {} times.", increases)
 }
+
+pub fn solve_2() {
+	let depth_measurements: Vec<_> = helpers::input_nums!();
+	let increases = depth_measurements
+		.iter()
+		.tuple_windows::<(_, _, _)>()
+		.map(|(a, b, c)| a + b + c)
+		.tuple_windows()
+		.filter(|(a, b)| a < b)
+		.count();
+	println!(
+		"The three-measurement sliding window sums increase {} times.",
+		increases
+	)
+}

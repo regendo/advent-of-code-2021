@@ -6,7 +6,7 @@ Third time's the charm! Perhaps this time I'll finish it.
 
 | Day | Stars |
 |-----|-------|
-| 01  |  ★☆  |
+| 01  |  ★★  |
 | 02  |  ☆☆  |
 | 03  |  ☆☆  |
 | 04  |  ☆☆  |
