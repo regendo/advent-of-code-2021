@@ -1,3 +1,5 @@
+use advent_of_code_2021 as lib;
+
 fn main() {
-	println!("Hello, world!");
+	lib::day01::solve_1();
 }
