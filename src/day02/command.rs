@@ -6,9 +6,16 @@ use regex::Regex;
 use crate::helpers;
 
 #[derive(Debug, Clone, Copy, Default)]
-pub struct Position {
+pub struct SimplePosition {
 	pub horizontal: u32,
 	pub depth: u32,
+}
+
+#[derive(Debug, Clone, Copy, Default)]
+pub struct ComplexPosition {
+	pub horizontal: i32,
+	pub depth: i32,
+	pub aim: i32,
 }
 
 #[derive(Debug, Clone, Copy)]
@@ -41,19 +48,39 @@ impl FromStr for Command {
 }
 
 impl Command {
-	pub fn apply(self, pos: Position) -> Position {
+	pub fn apply_v1(self, pos: SimplePosition) -> SimplePosition {
 		match self {
-			Command::Forward(dist) => Position {
+			Command::Forward(dist) => SimplePosition {
 				horizontal: pos.horizontal + dist,
 				depth: pos.depth,
 			},
-			Command::Up(dist) => Position {
+			Command::Up(dist) => SimplePosition {
 				horizontal: pos.horizontal,
 				depth: pos.depth - dist,
 			},
-			Command::Down(dist) => Position {
+			Command::Down(dist) => SimplePosition {
 				horizontal: pos.horizontal,
 				depth: pos.depth + dist,
+			},
+		}
+	}
+
+	pub fn apply_v2(self, pos: ComplexPosition) -> ComplexPosition {
+		match self {
+			Command::Forward(dist) => ComplexPosition {
+				horizontal: pos.horizontal + i32::try_from(dist).unwrap(),
+				depth: pos.depth + i32::try_from(dist).unwrap() * pos.aim,
+				aim: pos.aim,
+			},
+			Command::Up(angle) => ComplexPosition {
+				horizontal: pos.horizontal,
+				depth: pos.depth,
+				aim: pos.aim - i32::try_from(angle).unwrap(),
+			},
+			Command::Down(angle) => ComplexPosition {
+				horizontal: pos.horizontal,
+				depth: pos.depth,
+				aim: pos.aim + i32::try_from(angle).unwrap(),
 			},
 		}
 	}
