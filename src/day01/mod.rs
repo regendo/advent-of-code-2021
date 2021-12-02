@@ -2,7 +2,7 @@ use crate::helpers;
 use itertools::Itertools;
 
 pub fn solve_1() {
-	let depth_measurements: Vec<_> = helpers::input_nums!();
+	let depth_measurements = helpers::input! {u64};
 	let increases = depth_measurements
 		.iter()
 		.tuple_windows()
@@ -12,7 +12,7 @@ pub fn solve_1() {
 }
 
 pub fn solve_2() {
-	let depth_measurements: Vec<_> = helpers::input_nums!();
+	let depth_measurements = helpers::input! {u64};
 	let increases = depth_measurements
 		.iter()
 		.tuple_windows::<(_, _, _)>()
