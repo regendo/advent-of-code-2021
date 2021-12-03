@@ -75,10 +75,19 @@ impl TryFrom<Bits> for u32 {
 	type Error = String;
 
 	fn try_from(value: Bits) -> Result<Self, Self::Error> {
+		u32::try_from(&value)
+	}
+}
+
+impl TryFrom<&Bits> for u32 {
+	type Error = String;
+
+	fn try_from(value: &Bits) -> Result<Self, Self::Error> {
 		if value.width() > 32 {
 			Err("Doesn't fit into a u32.".to_owned())
 		} else {
 			Ok(value
+				.clone()
 				.into_iter()
 				.map(|bit| match bit {
 					false => 0,
