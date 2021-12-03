@@ -25,7 +25,7 @@ pub enum Command {
 	Down(u32),
 }
 
-pub static COMMAND: Lazy<Regex> =
+static COMMAND: Lazy<Regex> =
 	helpers::simple_regex!(r"^(?P<direction>forward|up|down)\s(?P<distance>\d+)$");
 
 impl FromStr for Command {
