@@ -117,12 +117,10 @@ impl AverageAt for Vec<Bits> {
 				true => (count.0, count.1 + 1),
 			});
 
-		#[allow(clippy::needless_bool)]
-		// More readable in just this one case
-		if zeroes >= ones {
-			false
-		} else {
-			true
+		match zeroes.cmp(&ones) {
+			std::cmp::Ordering::Less => true,
+			std::cmp::Ordering::Equal => true,
+			std::cmp::Ordering::Greater => false,
 		}
 	}
 }
