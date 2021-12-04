@@ -1,0 +1,4 @@
+[*.rs]
+# I don't like setting tab size for everyone--individual tab size is the whole point of using tabs--but if I don't, github will display it to you at an insane unreadable tab size of 8.
+indent_style = tab
+indent_size = 3
