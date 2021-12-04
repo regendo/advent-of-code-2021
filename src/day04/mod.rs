@@ -29,7 +29,7 @@ pub fn solve_1() {
 			board.mark(num);
 			if board.is_bingo() {
 				println!(
-					"Bingo! Our final score is {}.",
+					"Bingo! First victory goes to final score {}.",
 					board.score() * u32::from(num)
 				);
 				return;
@@ -40,5 +40,18 @@ pub fn solve_1() {
 }
 
 pub fn solve_2() {
-	todo!()
+	let (drawings, mut boards) = input();
+	let mut score = None;
+
+	for num in drawings {
+		for board in &mut boards {
+			if !board.is_bingo() {
+				board.mark(num);
+				if board.is_bingo() {
+					score = Some(board.score() * u32::from(num));
+				}
+			}
+		}
+	}
+	println!("Finally! The last bingo scored {}.", score.unwrap())
 }
