@@ -10,7 +10,7 @@ Third time's the charm! Perhaps this time I'll finish it.
 | 02  |  ★★  |
 | 03  |  ★★  |
 | 04  |  ★★  |
-| 05  |  ★☆  |
+| 05  |  ★★  |
 | 06  |  ☆☆  |
 | 07  |  ☆☆  |
 | 08  |  ☆☆  |

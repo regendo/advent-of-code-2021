@@ -15,9 +15,22 @@ impl Line {
 				.map(|x| Point(x, a.1))
 				.collect(),
 			Line::Vertical { from: a, to: b } => if a.1 <= b.1 { a.1..=b.1 } else { b.1..=a.1 }
-				.map(|x| Point(a.0, x))
+				.map(|y| Point(a.0, y))
 				.collect(),
-			Line::Diagonal { from: a, to: b } => todo!(),
+			Line::Diagonal { from: a, to: b } => if a.1 <= b.1 { a.1..=b.1 } else { b.1..=a.1 }
+				.map(|y| {
+					// Diagonals are only at exactly 45°
+					// Meaning the absolute distance |x_curr - x_0| is always equal to |y_curr - y_0|
+					let abs_dist = if y <= a.1 { a.1 - y } else { y - a.1 };
+					let to_the_right = a.0 <= b.0;
+					let x = if to_the_right {
+						a.0 + abs_dist
+					} else {
+						a.0 - abs_dist
+					};
+					Point(x, y)
+				})
+				.collect(),
 		}
 	}
 }

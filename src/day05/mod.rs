@@ -26,11 +26,25 @@ pub fn solve_1() {
 	.count();
 
 	println!(
-		"The hydrothermal vents overlap at {} unique points.",
+		"The hydrothermal vents overlap at {} unique points (excluding diagonals).",
 		overlaps
 	);
 }
 
 pub fn solve_2() {
-	todo!("part 2")
+	let hydrothermal_vents = helpers::input! { grid::Line };
+	let overlaps = count_occurrances(
+		&hydrothermal_vents
+			.iter()
+			.flat_map(|line| line.points())
+			.collect_vec(),
+	)
+	.iter()
+	.filter(|(_, &count)| count >= 2)
+	.count();
+
+	println!(
+		"The hydrothermal vents overlap at {} unique points (including diagonals).",
+		overlaps
+	);
 }
