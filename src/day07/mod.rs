@@ -10,12 +10,12 @@ fn crabs() -> Fleet {
 		.collect()
 }
 
-fn calc_optimal_position(fleet: &Fleet) -> (usize, usize) {
+fn calc_optimal_position(fleet: Fleet, fuel_consumption: fn(usize) -> usize) -> (usize, usize) {
 	let mut minimum: Option<(usize, usize)> = None;
 	for pos in *fleet.first().unwrap()..=*fleet.last().unwrap() {
 		let total_fuel_for_position = fleet
 			.iter()
-			.map(|&crab| if crab > pos { crab - pos } else { pos - crab })
+			.map(|&crab| fuel_consumption(if crab > pos { crab - pos } else { pos - crab }))
 			.sum();
 		if let Some((_, min)) = minimum {
 			if min > total_fuel_for_position {
@@ -29,13 +29,19 @@ fn calc_optimal_position(fleet: &Fleet) -> (usize, usize) {
 }
 
 pub fn solve_1() {
-	let (position, fuel) = calc_optimal_position(&crabs());
+	let fuel_consumption = |dist| dist;
+	let (position, fuel) = calc_optimal_position(crabs(), fuel_consumption);
 	println!(
-		"Best position is at coordinate {}, reachable with a total {} fuel.",
+		"Best position with normal fuel consumption is at coordinate {}, reachable with a total {} fuel.",
 		position, fuel
 	)
 }
 
 pub fn solve_2() {
-	todo!()
+	let fuel_consumption = |n| n * (n + 1) / 2;
+	let (position, fuel) = calc_optimal_position(crabs(), fuel_consumption);
+	println!(
+		"Best position with increasing fuel consumption is at coordinate {}, reachable with a total {} fuel.",
+		position, fuel
+	)
 }
