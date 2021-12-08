@@ -13,5 +13,13 @@ pub fn solve_1() {
 }
 
 pub fn solve_2() {
-	todo!()
+	let mut swarm = include_str!("input.txt")
+		.parse::<fish::ReproductionCycle>()
+		.unwrap();
+
+	for _ in 0..256 {
+		swarm.advance();
+	}
+
+	println!("After 256 days, we've got {} fish.", swarm.count())
 }
