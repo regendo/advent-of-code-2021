@@ -1,15 +1,12 @@
-use itertools::Itertools;
-
 use crate::helpers;
 use std::collections::HashMap;
 
 mod grid;
 
-fn count_occurrances(points: &[grid::Point]) -> HashMap<grid::Point, u32> {
-	points.iter().fold(HashMap::new(), |mut count, curr| {
-		*count.entry(*curr).or_insert(0) += 1;
-		count
-	})
+fn count_occurrances(points: &[grid::Point]) -> HashMap<&grid::Point, usize> {
+	use itertools::Itertools as _;
+
+	points.iter().counts()
 }
 
 pub fn solve_1() {
@@ -19,7 +16,7 @@ pub fn solve_1() {
 			.iter()
 			.filter(|line| !matches!(line, grid::Line::Diagonal { .. }))
 			.flat_map(|line| line.points())
-			.collect_vec(),
+			.collect::<Vec<_>>(),
 	)
 	.iter()
 	.filter(|(_, &count)| count >= 2)
@@ -37,7 +34,7 @@ pub fn solve_2() {
 		&hydrothermal_vents
 			.iter()
 			.flat_map(|line| line.points())
-			.collect_vec(),
+			.collect::<Vec<_>>(),
 	)
 	.iter()
 	.filter(|(_, &count)| count >= 2)
