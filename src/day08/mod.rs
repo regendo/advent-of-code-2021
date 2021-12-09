@@ -2,8 +2,6 @@ mod guess;
 mod puzzle;
 mod segment;
 
-use itertools::Itertools;
-
 use crate::helpers;
 
 pub fn solve_1() {
@@ -28,5 +26,18 @@ pub fn solve_1() {
 }
 
 pub fn solve_2() {
-	todo!()
+	let puzzles = helpers::input! { puzzle::Puzzle };
+
+	let total: u32 = puzzles
+		.into_iter()
+		.map(|mut puzzle| {
+			puzzle.advanced_check();
+			puzzle
+				.answer()
+				.iter()
+				.map(|opt| opt.unwrap())
+				.fold(0, |num, digit| num * 10 + u32::from(digit))
+		})
+		.sum();
+	println!("All output values sum up to {}.", total);
 }

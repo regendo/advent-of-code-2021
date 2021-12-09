@@ -114,3 +114,9 @@ impl From<Digit> for u8 {
 		}
 	}
 }
+
+impl From<Digit> for u32 {
+	fn from(d: Digit) -> Self {
+		u8::from(d).into()
+	}
+}
