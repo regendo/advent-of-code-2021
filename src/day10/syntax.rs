@@ -2,7 +2,7 @@ use super::bracket::Bracket;
 
 #[derive(Debug)]
 pub enum Error {
-	Incomplete,
+	Incomplete { missing: Vec<Bracket> },
 	Corrupted { expected: Bracket, found: Bracket },
 }
 
@@ -24,6 +24,12 @@ pub fn validate(line: &[Bracket]) -> Result<(), Error> {
 	if nesting.is_empty() {
 		Ok(())
 	} else {
-		Err(Error::Incomplete)
+		Err(Error::Incomplete {
+			missing: nesting
+				.into_iter()
+				.rev()
+				.map(|b| b.opposite())
+				.collect::<Vec<_>>(),
+		})
 	}
 }
