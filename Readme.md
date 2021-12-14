@@ -14,7 +14,7 @@ Third time's the charm! Perhaps this time I'll finish it.
 | 06  |  ★★  |
 | 07  |  ★★  |
 | 08  |  ★★  |
-| 09  |  ☆☆  |
+| 09  |  ★☆  |
 | 10  |  ☆☆  |
 | 11  |  ☆☆  |
 | 12  |  ☆☆  |

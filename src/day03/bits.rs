@@ -26,14 +26,6 @@ impl Bits {
 	}
 }
 
-impl Default for Bits {
-	fn default() -> Self {
-		Self {
-			inner: Default::default(),
-		}
-	}
-}
-
 impl FromStr for Bits {
 	type Err = String;
 
