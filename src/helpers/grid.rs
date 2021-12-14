@@ -12,28 +12,32 @@ impl<T> Grid<T> {
 		self.0.get(y).and_then(|line| line.get(x))
 	}
 
-	pub fn surrounding(&self, x: usize, y: usize) -> Option<Vec<&T>> {
+	pub fn surrounding_pos(&self, x: usize, y: usize) -> Option<Vec<(usize, usize)>> {
+		let bb = self.bounding_box();
 		if self.get(x, y).is_some() {
 			Some(
-				match (x, y) {
-					(0, 0) => [None, None, Some((x + 1, y)), Some((x, y + 1))],
-					(0, _) => [None, Some((x, y - 1)), Some((x + 1, y)), Some((x, y + 1))],
-					(_, 0) => [Some((x - 1, y)), None, Some((x + 1, y)), Some((x, y + 1))],
-					(_, _) => [
-						Some((x - 1, y)),
-						Some((x, y - 1)),
-						Some((x + 1, y)),
-						Some((x, y + 1)),
-					],
-				}
+				[
+					if x > 0 { Some((x - 1, y)) } else { None },
+					if y > 0 { Some((x, y - 1)) } else { None },
+					if x + 1 < bb.0 { Some((x + 1, y)) } else { None },
+					if y + 1 < bb.1 { Some((x, y + 1)) } else { None },
+				]
 				.into_iter()
-				.filter_map(|opt| opt.map(|(x, y)| self.get(x, y)))
 				.flatten()
 				.collect(),
 			)
 		} else {
 			None
 		}
+	}
+
+	pub fn surrounding(&self, x: usize, y: usize) -> Option<Vec<&T>> {
+		self.surrounding_pos(x, y).map(|positions| {
+			positions
+				.into_iter()
+				.filter_map(|(x, y)| self.get(x, y))
+				.collect()
+		})
 	}
 }
 
